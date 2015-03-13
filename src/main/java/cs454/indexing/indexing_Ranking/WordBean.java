@@ -3,13 +3,13 @@ package cs454.indexing.indexing_Ranking;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IndexBean {
+public class WordBean {
 	
 	String word;
 	
-	Map<Integer, Integer> wordCountMap = new HashMap();
+	Map<String, Integer> wordCountMap = new HashMap();
 
-	public IndexBean()
+	public WordBean()
 	{
 		
 	}
@@ -22,11 +22,11 @@ public class IndexBean {
 		this.word = word;
 	}
 
-	public Map<Integer, Integer> getWordCountMap() {
+	public Map<String, Integer> getWordCountMap() {
 		return wordCountMap;
 	}
 
-	public void setWordCountMap(Map<Integer, Integer> wordCountMap) {
+	public void setWordCountMap(Map<String, Integer> wordCountMap) {
 		this.wordCountMap = wordCountMap;
 	}
 	
