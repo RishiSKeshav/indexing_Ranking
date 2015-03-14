@@ -42,26 +42,25 @@ public class App
 
 	public static void main(String[] args) {
 		
-		File file = new File(
-				"I:\\books\\CS454(information Retrieval)\\data\\Crawler\\index.json");
+		//File file = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\index.json");
 		
-		String path = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\Extracter1.json";
+		File file = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\"+ args[3]);
+		
+		//String path = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\Extracter1.json";
 
-		// String path
-		// ="I:\\books\\CS454(information Retrieval)\\data\\Crawler\\" +
-		// args[1];
+		String path ="I:\\books\\CS454(information Retrieval)\\data\\Crawler\\" +args[1];
 
 		String stopWordPath = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\words.txt";
-		//stopWordList=readStopWordFile(stopWordPath);
+		stopWordList=readStopWordFile(stopWordPath);
 		
 		
-		//readJson(path);
+		readJson(path);
 		
-		//writeFile(file);
+		writeFile(file);
 		
 		//System.out.println(processWord("String.*,?!"));
 		
-		new Ranking().mainFunction(path);
+		new Ranking().mainFunction(path,args[5]);
 		
 
 	}

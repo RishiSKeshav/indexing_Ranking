@@ -42,7 +42,7 @@ public class Ranking
 	
 	
 	
-	public void mainFunction(String path)
+	public void mainFunction(String path,String rankingFileName)
 	{
 		readJson(path);
 		
@@ -51,7 +51,8 @@ public class Ranking
 				System.out.println("count: " + entry.getValue());
 		}*/
 		
-		File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\rank.json");
+		//File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\rank.json");
+		File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\"+rankingFileName);
 		
 		defaultRank();
 		rank();
