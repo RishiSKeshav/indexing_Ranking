@@ -51,9 +51,10 @@ public class App
 		String path ="I:\\books\\CS454(information Retrieval)\\data\\Crawler\\" +args[1];
 
 		String stopWordPath = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\words.txt";
+		
 		stopWordList=readStopWordFile(stopWordPath);
 		
-		
+		System.out.println("Indexing process started");
 		readJson(path);
 		
 		writeFile(file);
@@ -111,7 +112,7 @@ public class App
 				String localpath = jsonObject.get("localpath").toString();
 				String fileName = FilenameUtils.getBaseName(localpath);				
 				
-				System.out.println(localpath);
+				System.out.println("Currently processing file "+localpath);
 				BodyContentHandler bodyHandler = readFile(localpath);
 				
 				if(bodyHandler!=null)
@@ -259,10 +260,11 @@ public class App
 				
 				for (Map.Entry<String, Integer> entry : w.getWordCountMap().entrySet()) 
 				{
+					
 					obj.put(w.getWord(), w.getWordCountMap());
 					System.out.println("Document: " + entry.getKey() + "Count: " + entry.getValue());
-				}
-				
+					System.out.println("------------------------------------------------------------");
+				}				
 				jsonArrayToPrint.add(obj);
 			}
 			
@@ -281,7 +283,7 @@ public class App
 			file.flush();
 			file.close();
 
-			System.out.println("Done");
+			System.out.println("Done writing into file");
 		}
 		catch (IOException e)
 		{

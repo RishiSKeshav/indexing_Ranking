@@ -53,6 +53,8 @@ public class Ranking
 		
 		//File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\rank.json");
 		File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\"+rankingFileName);
+		System.out.println();
+		System.out.println("Ranking process started");
 		
 		defaultRank();
 		rank();
@@ -62,6 +64,7 @@ public class Ranking
 		for (Map.Entry<String, Double> entry : rankMap.entrySet()) {
 				System.out.println("url: " + entry.getKey());
 				System.out.println("rank: " + entry.getValue());
+				System.out.println("");
 		}
 	}
 	
@@ -87,7 +90,7 @@ public class Ranking
 						findIncomingLinks(url);
 						LinkSet.add(url);
 					}
-					System.out.println("-------------------------------------------");
+					//System.out.println("-------------------------------------------");
 					
 				}
 			}
@@ -276,7 +279,7 @@ public class Ranking
 			file.flush();
 			file.close();
 
-			System.out.println("Done");
+			System.out.println("Done writing into file");
 		}
 		catch (IOException e)
 		{
