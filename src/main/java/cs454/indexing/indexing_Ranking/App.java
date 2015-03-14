@@ -43,21 +43,21 @@ public class App
 	public static void main(String[] args) {
 		
 		File file = new File(
-				"E:\\books\\CS454(information Retrieval)\\data\\Crawler\\index.json");
+				"I:\\books\\CS454(information Retrieval)\\data\\Crawler\\index.json");
 		
-		String path = "E:\\books\\CS454(information Retrieval)\\data\\Crawler\\Extracter1.json";
+		String path = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\Extracter1.json";
 
 		// String path
 		// ="I:\\books\\CS454(information Retrieval)\\data\\Crawler\\" +
 		// args[1];
 
-		String stopWordPath = "E:\\books\\CS454(information Retrieval)\\data\\Crawler\\words.txt";
+		String stopWordPath = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\words.txt";
 		stopWordList=readStopWordFile(stopWordPath);
 		
 		
-		//readJson(path);
+		readJson(path);
 		
-		//writeFile(file);
+		writeFile(file);
 		
 		
 		
@@ -75,7 +75,9 @@ public class App
 				StringTokenizer st = new StringTokenizer(sCurrentLine);
 				
 				while (st.hasMoreTokens()) {
-					stopWordList.add(st.nextToken());					
+					
+					String word = st.nextToken();
+					stopWordList.add(word.trim().toLowerCase());					
 				}
 				//System.out.println(sCurrentLine);
 			}
@@ -122,6 +124,8 @@ public class App
 		        	String token="";
 		        	token = st.nextToken();
 		        	
+		        	if(!stopWordList.contains(token.toLowerCase().trim())){
+		        	
 		        	for(WordBean w : wordList)
 		        	{		        		
 		        		if(w.getWord().equals(token))
@@ -161,6 +165,7 @@ public class App
 		        	}
 		        	
 		            //System.out.println(st.nextToken());
+		        }
 		        }
 		        }
 		        System.out.println("------------------------------------------------------");
