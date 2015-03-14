@@ -52,14 +52,16 @@ public class App
 		// args[1];
 
 		String stopWordPath = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\words.txt";
-		stopWordList=readStopWordFile(stopWordPath);
+		//stopWordList=readStopWordFile(stopWordPath);
 		
 		
-		readJson(path);
+		//readJson(path);
 		
-		writeFile(file);
+		//writeFile(file);
 		
+		//System.out.println(processWord("String.*,?!"));
 		
+		new Ranking().mainFunction(path);
 		
 
 	}
@@ -123,6 +125,8 @@ public class App
 		        	int flag=0;
 		        	String token="";
 		        	token = st.nextToken();
+		        	token = processWord(token);
+		        	
 		        	
 		        	if(!stopWordList.contains(token.toLowerCase().trim())){
 		        	
@@ -191,6 +195,10 @@ public class App
 		}
 	}
 
+	private static String processWord(String x) {
+	    return x.replaceAll("[\\]\\[(){}\\*,.;!?<>%]", "");
+	}
+	
 	private static BodyContentHandler readFile(String localpath) {
 		Map<String, Object> metadata = new HashMap<String, Object>();
 
