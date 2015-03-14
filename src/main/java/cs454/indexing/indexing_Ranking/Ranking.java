@@ -53,6 +53,7 @@ public class Ranking
 		
 		File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\rank.json");
 		
+		defaultRank();
 		rank();
 		
 		writeFile(rankJsonFile);
@@ -107,38 +108,47 @@ public class Ranking
 		
 	}
 	
-	private void rank()
+	private void defaultRank()
 	{
 		int totalLinksCount = LinkSet.size();
 		double temp;
 		double rank;
 		
-		double initialRank =1/totalLinksCount;
+		double initialRank =1.0/totalLinksCount;
 		for(String url: LinkSet)
 		{
 			rankMap.put(url, initialRank);
 		}
+	}	
 		
-		
+	
+	private void rank()
+	{	
+		double rank;
+		double temp;
 		for(int i=0;i<10;i++)
 		{
 			for(String url: LinkSet)
 			{
-				rank=0;
+				rank=0.0;
 				if(incomingLinksMap.get(url)!=null)
 				{
-					temp= rankMap.get(url);
+					
 					List<String> incoming = incomingLinksMap.get(url);
 					
 					for(String link:incoming)
 					{
-						if(outgoingLinksCountMap.get(url)!=null && outgoingLinksCountMap.get(url)>0)
-							temp=temp+outgoingLinksCountMap.get(url);
+						rank= rankMap.get(link);
+						Double newRank = rankMap.get(link)/outgoingLinksCountMap.get(link);
 						
-						rank=rank+temp;
+						/*if(outgoingLinksCountMap.get(url)!=null && outgoingLinksCountMap.get(url)>0)
+							temp=temp+outgoingLinksCountMap.get(url);*/
+						
+						rank=rank+newRank;
 					}
+					rankMap.put(url, rank);
 				}				
-				rankMap.put(url, rank);					
+									
 			}
 		}
 	}
