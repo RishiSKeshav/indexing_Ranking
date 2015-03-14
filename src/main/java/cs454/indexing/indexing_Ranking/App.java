@@ -1,5 +1,6 @@
 package cs454.indexing.indexing_Ranking;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -36,24 +37,54 @@ import com.google.gson.GsonBuilder;
 public class App
 {
 	static List<WordBean> wordList = new ArrayList<WordBean>();
+	
+	static List<String> stopWordList = new ArrayList<String>();
 
 	public static void main(String[] args) {
 		
 		File file = new File(
-				"I:\\books\\CS454(information Retrieval)\\data\\Crawler\\index.json");
+				"E:\\books\\CS454(information Retrieval)\\data\\Crawler\\index.json");
 		
-		String path = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\Extracter1.json";
+		String path = "E:\\books\\CS454(information Retrieval)\\data\\Crawler\\Extracter1.json";
 
 		// String path
 		// ="I:\\books\\CS454(information Retrieval)\\data\\Crawler\\" +
 		// args[1];
 
-		readJson(path);
+		String stopWordPath = "E:\\books\\CS454(information Retrieval)\\data\\Crawler\\words.txt";
+		stopWordList=readStopWordFile(stopWordPath);
 		
-		writeFile(file);
+		
+		//readJson(path);
+		
+		//writeFile(file);
+		
 		
 		
 
+	}
+
+	private static List<String> readStopWordFile(String stopWordPath) {
+		try 
+		{
+			BufferedReader br = new BufferedReader(new FileReader(stopWordPath));
+			String sCurrentLine;
+ 
+			while ((sCurrentLine = br.readLine()) != null) {
+				
+				StringTokenizer st = new StringTokenizer(sCurrentLine);
+				
+				while (st.hasMoreTokens()) {
+					stopWordList.add(st.nextToken());					
+				}
+				//System.out.println(sCurrentLine);
+			}
+ 
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+ 
+		return stopWordList;
 	}
 
 	private static void readJson(String path) throws NoSuchElementException
