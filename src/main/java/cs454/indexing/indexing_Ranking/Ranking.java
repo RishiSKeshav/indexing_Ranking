@@ -1,7 +1,9 @@
 package cs454.indexing.indexing_Ranking;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,19 +28,38 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.xml.sax.ContentHandler;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Ranking
 {
+	List<String> LinkSet = new ArrayList<String>();
 	Map<String,Integer> outgoingLinksCountMap = new HashMap();
 	Map<String,List<String>> outgoingLinksMap = new HashMap();
 	Map<String,Integer> incomingLinksCountMap = new HashMap();
+	Map<String,List<String>> incomingLinksMap = new HashMap();
+	Map<String,Double> rankMap = new HashMap();
+	
+	
 	
 	public void mainFunction(String path)
 	{
 		readJson(path);
 		
-		for (Map.Entry<String, Integer> entry : incomingLinksCountMap.entrySet()) {
+		/*for (Map.Entry<String, Integer> entry : incomingLinksCountMap.entrySet()) {
 				System.out.println("url: " + entry.getKey());
 				System.out.println("count: " + entry.getValue());
+		}*/
+		
+		File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\rank.json");
+		
+		rank();
+		
+		writeFile(rankJsonFile);
+		
+		for (Map.Entry<String, Double> entry : rankMap.entrySet()) {
+				System.out.println("url: " + entry.getKey());
+				System.out.println("rank: " + entry.getValue());
 		}
 	}
 	
@@ -58,8 +79,13 @@ public class Ranking
 					JSONObject jsonObject = (JSONObject) o;
 					String url = jsonObject.get("url").toString();					
 					
-					parse(url);
-					findIncomingLinks(url);
+					if(!LinkSet.contains(url))
+					{
+						parse(url);					
+						findIncomingLinks(url);
+						LinkSet.add(url);
+					}
+					System.out.println("-------------------------------------------");
 					
 				}
 			}
@@ -81,30 +107,85 @@ public class Ranking
 		
 	}
 	
+	private void rank()
+	{
+		int totalLinksCount = LinkSet.size();
+		double temp;
+		double rank;
+		
+		double initialRank =1/totalLinksCount;
+		for(String url: LinkSet)
+		{
+			rankMap.put(url, initialRank);
+		}
+		
+		
+		for(int i=0;i<10;i++)
+		{
+			for(String url: LinkSet)
+			{
+				rank=0;
+				if(incomingLinksMap.get(url)!=null)
+				{
+					temp= rankMap.get(url);
+					List<String> incoming = incomingLinksMap.get(url);
+					
+					for(String link:incoming)
+					{
+						if(outgoingLinksCountMap.get(url)!=null && outgoingLinksCountMap.get(url)>0)
+							temp=temp+outgoingLinksCountMap.get(url);
+						
+						rank=rank+temp;
+					}
+				}				
+				rankMap.put(url, rank);					
+			}
+		}
+	}
+	
 	private void findIncomingLinks(String url)
 	{
 		int count =0;
+		List<String> incomingsLinks = new ArrayList<String>();
+	
+		//System.out.println("Url: " + url);
 		
 		if(incomingLinksCountMap.containsKey(url))
 			count=incomingLinksCountMap.get(url);
 	
 		
 		for (Map.Entry<String, List<String>> entry : outgoingLinksMap.entrySet()) {
-			List<String> links = entry.getValue();
+			List<String> links = entry.getValue();			
+			
+			if(links.size()>0)
+			{
 			
 			if(links.contains(url))
 			{				
+				incomingsLinks.add(entry.getKey());
 				count++;
+			}
 			}
 		}
 		
 		if(count>0)
 		{
+			incomingLinksMap.put(url, incomingsLinks);
+			
 			if(incomingLinksCountMap.containsKey(url))
 				incomingLinksCountMap.put(url, incomingLinksCountMap.get(url)+1);
 			else
 				incomingLinksCountMap.put(url, count);
-		}		
+		}	
+		
+		/*System.out.println("count: "+ count);
+		if(incomingLinksMap.get(url)!=null)
+		{
+		for(String s: incomingLinksMap.get(url))
+		{
+			System.out.println(s);
+		}
+		}*/
 	}
 
 	public void parse(String url1)
@@ -156,5 +237,40 @@ public class Ranking
 		catch (Exception e){
 			System.out.println("");
 		}
+	}
+	
+	public void writeFile(File file1) {
+		try
+		{
+			
+			JSONArray jsonArrayToPrint = new JSONArray();
+			
+				
+				for (Map.Entry<String, Double> entry : rankMap.entrySet()) 
+				{
+					JSONObject obj = new JSONObject();
+					obj.put(entry.getKey(), entry.getValue());
+					jsonArrayToPrint.add(obj);
+				}
+			
+			/*http://examples.javacodegeeks.com/core-java/gson/gsonbuilder/enable-pretty-print-json-output-using-gson-example/
+*/			
+			Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+			Gson uglyJson = new Gson();
+			String pretJson = prettyGson.toJson(jsonArrayToPrint);
+
+			FileWriter file = new FileWriter(file1.getAbsolutePath(), true);
+			file.write(pretJson.toString());
+			file.write("\n\n");
+			file.flush();
+			file.close();
+
+			System.out.println("Done");
+		}
+		catch (IOException e)
+		{
+
+		}
+
 	}
 }
