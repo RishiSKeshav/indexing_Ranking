@@ -44,13 +44,15 @@ public class App
 		
 		//File file = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\index.json");
 		
-		File file = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\"+ args[3]);
+		File temp = new File(args[1]);
+		
+		File file = new File(temp.getParent()+"\\"+args[5]);
 		
 		//String path = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\Extracter1.json";
 
-		String path ="I:\\books\\CS454(information Retrieval)\\data\\Crawler\\" +args[1];
+		String path =args[1];
 
-		String stopWordPath = "I:\\books\\CS454(information Retrieval)\\data\\Crawler\\words.txt";
+		String stopWordPath = args[3];
 		
 		stopWordList=readStopWordFile(stopWordPath);
 		
@@ -61,7 +63,7 @@ public class App
 		
 		//System.out.println(processWord("String.*,?!"));
 		
-		new Ranking().mainFunction(path,args[5]);
+		new Ranking().mainFunction(path,temp.getParent()+"\\"+args[7]);
 		
 
 	}

@@ -52,7 +52,9 @@ public class Ranking
 		}*/
 		
 		//File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\rank.json");
-		File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\"+rankingFileName);
+		
+		File temp = new File(path);
+		File rankJsonFile = new File(rankingFileName);
 		System.out.println();
 		System.out.println("Ranking process started");
 		
@@ -86,6 +88,8 @@ public class Ranking
 					
 					if(!LinkSet.contains(url))
 					{
+						System.out.println("-----------------------------------------");
+						System.out.println("Collecting data for ranking from "+ url);
 						parse(url);					
 						findIncomingLinks(url);
 						LinkSet.add(url);
@@ -134,6 +138,8 @@ public class Ranking
 		{
 			for(String url: LinkSet)
 			{
+				System.out.println("Currently ranking "+url);
+				
 				rank=0.0;
 				if(incomingLinksMap.get(url)!=null)
 				{
