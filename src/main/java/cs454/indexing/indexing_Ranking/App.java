@@ -42,7 +42,12 @@ public class App
 
 	public static void main(String[] args) {
 		
-		//File file = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\index.json");
+		
+		
+		// from here
+		
+		
+		
 		
 		File temp = new File(args[1]);
 		
@@ -127,6 +132,7 @@ public class App
 		        	int flag=0;
 		        	String token="";
 		        	token = st.nextToken();
+		        	token = token.toLowerCase().trim();
 		        	token = processWord(token);
 		        	
 		        	
@@ -198,7 +204,7 @@ public class App
 	}
 
 	private static String processWord(String x) {
-	    return x.replaceAll("[\\]\\[(){}\\*,.;!?<>%]", "");
+	    return x.replaceAll("[\\]\\[(){}\\*:,.;!?<>%]", "");
 	}
 	
 	private static BodyContentHandler readFile(String localpath) {

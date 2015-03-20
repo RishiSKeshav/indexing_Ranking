@@ -114,7 +114,7 @@
       <archive>
         <manifest>
      <addClasspath>true</addClasspath>
-     <mainClass>cs454.indexing.indexing_Ranking.App</mainClass>
+     <mainClass>cs454.indexing.indexing_Ranking.Indexing</mainClass>
      <classpathPrefix>dependency-jars/</classpathPrefix>
         </manifest>
       </archive>
