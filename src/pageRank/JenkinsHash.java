@@ -120,13 +120,7 @@ public class JenkinsHash {
  
     /**
      * Hash a variable-length key into a 32-bit value.  Every bit of the
-     * key affects every bit of the return value.  Every 1-bit and 2-bit
-     * delta achieves avalanche.  The best hash table sizes are powers of 2.
-     *
-     * @param buffer       Byte array that we are hashing on.
-     * @param initialValue Initial value of the hash if we are continuing from
-     *                     a previous run.  0 if none.
-     * @return Hash value for the buffer.
+     * key affects every bit of the return value.  
      */
     public long hash(byte[] buffer, long initialValue) {
         int len, pos;
