@@ -8,6 +8,9 @@ public class WordBean1
 	String url;
 	double tfdifValue;
 	int wordCount;
+	String title;
+	String description;
+	String author;
 	
 	public WordBean1()
 	{
@@ -61,6 +64,28 @@ public class WordBean1
 	public void setWordCount(int wordCount) {
 		this.wordCount = wordCount;
 	}
-	
-	
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}	
 }

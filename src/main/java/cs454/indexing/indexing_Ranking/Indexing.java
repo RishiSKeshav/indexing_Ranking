@@ -69,7 +69,7 @@ public class Indexing
 	
 	private static void debug() throws IOException
 	{
-		 File file = new File("C:\\Users\\RishiSuresh\\workspace\\webCrawler\\target\\data\\Crawler\\index11.json");
+		 File file = new File("C:\\Users\\RishiSuresh\\workspace\\webCrawler\\target\\data\\Crawler\\index112233.json");
 		 String path = "C:\\Users\\RishiSuresh\\workspace\\webCrawler\\target\\data\\Crawler\\Extracter.json";
 		 String stopWordPath = "C:\\Users\\RishiSuresh\\workspace\\webCrawler\\target\\data\\Crawler\\words.txt";
 			
@@ -103,6 +103,9 @@ public class Indexing
 				obj = new JSONObject();
 				obj.put("fileName", w.getFileName().toString());
 				obj.put("url", w.getUrl());
+				obj.put("title", w.getTitle());
+				obj.put("author", w.getAuthor());
+				obj.put("description", w.getDescription());
 				obj.put("Count", Integer.toString(w.getWordCount()));
 				termFreq = w.getWordCount() / totalSize;
 				termFreq =Double.parseDouble(new DecimalFormat("##.##").format(termFreq));
@@ -113,11 +116,14 @@ public class Indexing
 			
 		}
 		
+		JSONArray mainArray = new JSONArray();
+		mainArray.add(jsonObjectToPrint);
+		
 		FileWriter file = new FileWriter(file1.getAbsolutePath(), true);
         try {
         	
         	Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();			
-			String pretJson = prettyGson.toJson(jsonObjectToPrint);
+			String pretJson = prettyGson.toJson(mainArray);
         	
             file.write(pretJson);
             System.out.println("Done Writing into file");
@@ -228,6 +234,9 @@ public class Indexing
 				
 				if(keys.contains("Description"))
 				{
+					String title="";
+					String author="";
+					String description = jsonObject2.get("Description").toString() ;
 					String innerMetadata = jsonObject2.get("Description").toString() ;
 					StringTokenizer stringTokenizer = new StringTokenizer(
 							innerMetadata.toString().replaceAll("\\s+", " ")," .,-");
@@ -237,13 +246,16 @@ public class Indexing
 						element = processWord(element);
 
 						if (!stopWordList.equals((element)) && checkElements(element) == false && element.length()>2 && isNumeric(element) == false) {
-							doIndexingProcess(localpath,url,element);
+							doIndexingProcess(localpath,url,element,title,description,author);
 						}
 					}
 				}
 				
 				if(keys.contains("description"))
 				{
+					String title="";
+					String author="";
+					String description = jsonObject2.get("description").toString() ;
 					String innerMetadata = jsonObject2.get("description").toString() ;
 					StringTokenizer stringTokenizer = new StringTokenizer(
 							innerMetadata.toString().replaceAll("\\s+", " ")," .,-");
@@ -253,26 +265,32 @@ public class Indexing
 						element = processWord(element);
 
 						if (!stopWordList.equals((element)) && checkElements(element) == false && element.length()>2 && isNumeric(element) == false) {
-							doIndexingProcess(localpath,url,element);
+							doIndexingProcess(localpath,url,element,title,description,author);
 						}
 					}
 				}
 				
 				if(keys.contains("Author"))
 				{
+					String title="";
+					String description="";
+					String author = jsonObject2.get("Author").toString() ;
 					String innerMetadata=processWord(jsonObject2.get("Author").toString());
 					//System.out.println("Author "+ processWord(jsonObject2.get("Author").toString()));
 					
 					System.out.println(processAuthor(innerMetadata));
 					
 					if (!stopWordList.equals((innerMetadata)) && checkElements(innerMetadata) == false && innerMetadata.length()>2 && isNumeric(innerMetadata) == false) {
-						doIndexingProcess(localpath,url,innerMetadata);
+						doIndexingProcess(localpath,url,innerMetadata,title,description,author);
 										
 					}
 				}
 				
 				if(keys.contains("title"))
 				{
+					String author ="";
+					String description="";
+					String title  = jsonObject2.get("title").toString() ;
 					//System.out.println("title "+ processWord(jsonObject2.get("title").toString()));
 					String innerMetadata = jsonObject2.get("title").toString() ;
 					StringTokenizer stringTokenizer = new StringTokenizer(
@@ -283,7 +301,7 @@ public class Indexing
 						element = processWord(element);
 
 						if (!stopWordList.equals((element)) && checkElements(element) == false && element.length()>2 && isNumeric(element) == false) {
-							doIndexingProcess(localpath,url,element);
+							doIndexingProcess(localpath,url,element,title,description,author);
 						}
 					}
 				}
@@ -294,6 +312,10 @@ public class Indexing
 				
 				if(bodyHandler!=null)
 				{
+					String author ="";
+					String description="";
+					String title  = "" ;
+					
 					StringTokenizer stringTokenizer = new StringTokenizer(
 							bodyHandler.toString().replaceAll("\\s+", " ")," .,-");
 					
@@ -302,7 +324,7 @@ public class Indexing
 						element = processWord(element);
 
 						if (!stopWordList.equals((element)) && checkElements(element) == false && element.length()>2 && isNumeric(element) == false) {
-							doIndexingProcess(localpath,url,element);
+							doIndexingProcess(localpath,url,element,title,description,author);
 						}
 					}
 					
@@ -328,7 +350,7 @@ public class Indexing
 		}
 	}
 	
-	private static void doIndexingProcess(String localpath, String url,String token) {
+	private static void doIndexingProcess(String localpath, String url,String token,String title,String description,String author) {
 		
 		
 		//System.out.println(bodyHandler.toString());
@@ -343,6 +365,9 @@ public class Indexing
     			word1.setWordCount(1); 
     			word1.setFileName(localpath);
     			word1.setUrl(url);
+    			word1.setAuthor(author);
+    			word1.setDescription(description);
+    			word1.setTitle(title);
     			
     			words.add(word1);
     			wordList.add(word1);
@@ -370,6 +395,9 @@ public class Indexing
         			word1.setWordCount(1); 
         			word1.setFileName(localpath);
         			word1.setUrl(url);
+        			word1.setAuthor(author);
+        			word1.setDescription(description);
+        			word1.setTitle(title);
         			
         			words.add(word1);
         		}
@@ -433,6 +461,7 @@ public class Indexing
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void writeFile(File file1) {
 		try
 		{
@@ -456,6 +485,9 @@ public class Indexing
 						JSONObject obj1 = new JSONObject();
 						
 						obj1.put("URL", w.getUrl());
+						obj.put("title", w.getTitle());
+						obj.put("author", w.getAuthor());
+						obj.put("description", w.getDescription());
 						obj1.put("fileName", w.getFileName());
 						obj1.put("wordCount", w.getWordCount());
 						obj1.put("tfid",Double.parseDouble(new DecimalFormat("##.##").format(w.getWordCount()/words.size())));
