@@ -53,7 +53,7 @@
                 }
             }
 
-            //totalSum += currentPageRankSum;
+           
             totalSum += currentPageRankSum * (1.0 - mAlpha) + mAlpha * getPriorRankScore(currentVertex);
             setRankScore(currentVertex, currentPageRankSum * (1.0 - mAlpha) + mAlpha * getPriorRankScore(currentVertex));
         }
@@ -82,10 +82,7 @@
         return rankingMSE;
     }
 
-    /**
-     * The user datum key used to store the rank scores.
-     * @return the key
-     */
+   
     public String getRankScoreKey() {
         return KEY;
     }
