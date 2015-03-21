@@ -6,8 +6,7 @@ package Crawler;
  * <br> 
  * These are functions for producing 32-bit hashes for hash table lookup.
  * hashword(), hashlittle(), hashlittle2(), hashbig(), mix(), and final()
- * are externally useful functions.  Routines to test the hash are included
- * if SELF_TEST is defined.  You can use this free for any purpose.  
+ * are externally useful functions.  
  */
 public class JenkinsHash {
  

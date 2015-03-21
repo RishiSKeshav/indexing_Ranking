@@ -32,12 +32,7 @@
         for (Iterator vIt = mReachableVertices.iterator(); vIt.hasNext();) {
             Vertex currentVertex = (Vertex) vIt.next();
 
-//            Set incomingEdges = null;
-//            if (getGraph().isDirected()) {
-//                incomingEdges = currentVertex.getInEdges();
-//            } else {
-//                incomingEdges = currentVertex.getIncidentEdges();
-//            }
+
             Set incomingEdges = currentVertex.getInEdges();
 
             double currentPageRankSum = 0;

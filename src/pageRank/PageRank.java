@@ -4,13 +4,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Random;
  
-/**
- * <b>PageRank provides simple API to Google PageRank Technology</b>
- * Original source: http://www.temesoft.com/google-pagerank-api.jsp
- * <br>
- * PageRank queries google toolbar webservice and returns a
- * google page rank. 
-*/
+
 public class PageRank {
  
     /**
