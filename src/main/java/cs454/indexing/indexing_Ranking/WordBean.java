@@ -7,7 +7,7 @@ public class WordBean {
 	
 	String word;
 	
-	Map<String, Integer> wordCountMap = new HashMap();
+	Map<String, Integer> wordCountMap = new HashMap<String, Integer>();
 
 	public WordBean()
 	{

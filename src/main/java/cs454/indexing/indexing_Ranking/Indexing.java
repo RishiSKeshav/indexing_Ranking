@@ -43,9 +43,9 @@ public class Indexing
 
 	public static void main(String[] args) throws IOException 
 	{
-		      	debug();
+		      	//debug();
 		      
-				/*File temp = new File(args[1]);
+				File temp = new File(args[1]);
 				
 				File file = new File(temp.getParent()+"\\"+args[5]);
 				
@@ -64,12 +64,13 @@ public class Indexing
 				
 				//System.out.println(processWord("String.*,?!"));
 				
-				new Ranking().mainFunction(path,temp.getParent()+"\\"+args[7]);*/
+				new Ranking().mainFunction(path,temp.getParent()+"\\"+args[7]);
 	}
 	
+	@SuppressWarnings("unused")
 	private static void debug() throws IOException
 	{
-		 File file = new File("C:\\Users\\RishiSuresh\\workspace\\webCrawler\\target\\data\\Crawler\\index112233.json");
+		 File file = new File("C:\\Users\\RishiSuresh\\workspace\\webCrawler\\target\\data\\Crawler\\index.json");
 		 String path = "C:\\Users\\RishiSuresh\\workspace\\webCrawler\\target\\data\\Crawler\\Extracter.json";
 		 String stopWordPath = "C:\\Users\\RishiSuresh\\workspace\\webCrawler\\target\\data\\Crawler\\words.txt";
 			
@@ -165,6 +166,7 @@ public class Indexing
 		return stopWordList;
 	}
 	
+	@SuppressWarnings({ "unused", "unchecked" })
 	private static void readJson(String path) throws NoSuchElementException
     {
 		JSONParser parser = new JSONParser();
@@ -350,6 +352,8 @@ public class Indexing
 		}
 	}
 	
+	
+	
 	private static void doIndexingProcess(String localpath, String url,String token,String title,String description,String author) {
 		
 		
@@ -413,6 +417,7 @@ public class Indexing
 	    return x.replaceAll("[\\]\\[(){}\\*:,.;!?<>%]", "");
 	}
 
+	@SuppressWarnings("unused")
 	private static BodyContentHandler readFile(String localpath) {
 		Map<String, Object> metadata = new HashMap<String, Object>();
 
@@ -506,7 +511,7 @@ public class Indexing
 			/*http://examples.javacodegeeks.com/core-java/gson/gsonbuilder/enable-pretty-print-json-output-using-gson-example/
 */			
 			Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
-			Gson uglyJson = new Gson();
+			
 			String pretJson = prettyGson.toJson(jsonArrayToPrint);
 
 			FileWriter file = new FileWriter(file1.getAbsolutePath(), true);

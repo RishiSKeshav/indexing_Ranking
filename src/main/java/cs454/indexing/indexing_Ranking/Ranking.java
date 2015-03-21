@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
@@ -34,11 +33,11 @@ import com.google.gson.GsonBuilder;
 public class Ranking
 {
 	List<String> LinkSet = new ArrayList<String>();
-	Map<String,Integer> outgoingLinksCountMap = new HashMap();
-	Map<String,List<String>> outgoingLinksMap = new HashMap();
-	Map<String,Integer> incomingLinksCountMap = new HashMap();
-	Map<String,List<String>> incomingLinksMap = new HashMap();
-	Map<String,Double> rankMap = new HashMap();
+	Map<String,Integer> outgoingLinksCountMap = new HashMap<String, Integer>();
+	Map<String,List<String>> outgoingLinksMap = new HashMap<String, List<String>>();
+	Map<String,Integer> incomingLinksCountMap = new HashMap<String, Integer>();
+	Map<String,List<String>> incomingLinksMap = new HashMap<String, List<String>>();
+	Map<String,Double> rankMap = new HashMap<String, Double>();
 	
 	
 	
@@ -53,7 +52,7 @@ public class Ranking
 		
 		//File rankJsonFile = new File("I:\\books\\CS454(information Retrieval)\\data\\Crawler\\rank.json");
 		
-		File temp = new File(path);
+		new File(path);
 		File rankJsonFile = new File(rankingFileName);
 		System.out.println();
 		System.out.println("Ranking process started");
@@ -112,16 +111,11 @@ public class Ranking
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-				
-		
 	}
 	
 	private void defaultRank()
 	{
 		int totalLinksCount = LinkSet.size();
-		double temp;
-		double rank;
-		
 		double initialRank =1.0/totalLinksCount;
 		for(String url: LinkSet)
 		{
@@ -133,7 +127,6 @@ public class Ranking
 	private void rank()
 	{	
 		double rank;
-		double temp;
 		for(int i=0;i<10;i++)
 		{
 			for(String url: LinkSet)
@@ -212,7 +205,7 @@ public class Ranking
 	{
 		try
 		{
-			Map<String,Object> metadata = new HashMap<String, Object>();
+			new HashMap<String, Object>();
 			
 			Tika tika = new Tika();
 			tika.setMaxStringLength(10*1024*1024); 
@@ -259,6 +252,7 @@ public class Ranking
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void writeFile(File file1) {
 		try
 		{
@@ -269,14 +263,15 @@ public class Ranking
 				for (Map.Entry<String, Double> entry : rankMap.entrySet()) 
 				{
 					JSONObject obj = new JSONObject();
-					obj.put(entry.getKey(), entry.getValue());
+					obj.put("url", entry.getKey());
+					obj.put("value", entry.getValue());
 					jsonArrayToPrint.add(obj);
 				}
 			
 			/*http://examples.javacodegeeks.com/core-java/gson/gsonbuilder/enable-pretty-print-json-output-using-gson-example/
 */			
 			Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
-			Gson uglyJson = new Gson();
+			new Gson();
 			String pretJson = prettyGson.toJson(jsonArrayToPrint);
 
 			FileWriter file = new FileWriter(file1.getAbsolutePath(), true);

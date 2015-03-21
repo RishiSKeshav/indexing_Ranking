@@ -73,6 +73,7 @@ public class App
 
 	}
 
+	@SuppressWarnings("resource")
 	private static List<String> readStopWordFile(String stopWordPath) {
 		try 
 		{
@@ -152,7 +153,7 @@ public class App
 		        	if(flag==0)
 		        	{
 		        		WordBean word1 = new WordBean();
-	        			Map<String, Integer> wordCount =new HashMap();
+	        			Map<String, Integer> wordCount =new HashMap<String, Integer>();
 	        			wordCount.put(fileName, 1);       			
 	        			
 	        			word1.setWord(token);
@@ -207,6 +208,7 @@ public class App
 	    return x.replaceAll("[\\]\\[(){}\\*:,.;!?<>%]", "");
 	}
 	
+	@SuppressWarnings("unused")
 	private static BodyContentHandler readFile(String localpath) {
 		Map<String, Object> metadata = new HashMap<String, Object>();
 
@@ -253,6 +255,7 @@ public class App
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void writeFile(File file1) {
 		try
 		{
@@ -282,7 +285,7 @@ public class App
 			/*http://examples.javacodegeeks.com/core-java/gson/gsonbuilder/enable-pretty-print-json-output-using-gson-example/
 */			
 			Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
-			Gson uglyJson = new Gson();
+			
 			String pretJson = prettyGson.toJson(jsonArrayToPrint);
 
 			FileWriter file = new FileWriter(file1.getAbsolutePath(), true);
